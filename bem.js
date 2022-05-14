@@ -1,17 +1,18 @@
 function bem() {
   let resultString = "";
   let argBem = [];
-
+  // Забираем в цикле все аргументы из внешней функции
   for (let i = 0; i < arguments.length; i++) {
     argBem.push(arguments[i]);
   }
-
+  // если аргументов больше чем 1 приведим их написание через "-"
   argBem = String(argBem).replace(/,/g, "-");
 
   return function () {
     let argElement = "";
     let argMod = "";
-
+    // забираем все аргументы из внутренней функции
+    // в зависимости от того какой тип данных распределям аргументы по переменнм
     for (let i = 0; i < arguments.length; i++) {
       if (typeof arguments[i] === "string") {
         argElement = "__" + arguments[i];
@@ -21,7 +22,7 @@ function bem() {
     }
 
     let mod = "";
-
+    // вынимаем данные из объекта для модификаторов
     Object.keys(argMod).forEach((e) => {
       if (argMod[e]) {
         mod += " " + argBem + argElement + "_" + e;
@@ -31,7 +32,7 @@ function bem() {
         mod += "_" + argMod[e];
       }
     });
-
+    // собираем всю строку
     resultString = argBem + argElement + mod;
 
     return resultString;
